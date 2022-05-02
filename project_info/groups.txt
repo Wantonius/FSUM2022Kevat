@@ -6,6 +6,7 @@ Ryhmä 2
 Vadim
 Irina
 Markus
+Timo
 
 Ryhmä 3
 Jouni
@@ -23,5 +24,4 @@ Petri
 Roope
 
 Ryhmä 6
-Timo
 Miko
