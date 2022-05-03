@@ -19,7 +19,7 @@ const StatefulFunction = (props) => {
 		return () => clearInterval(interval);
 	},[]);
 
-	const startTimer = () => {
+	const startTimer = () => {	
 		setState((state) => ({
 			...state,
 			seconds:state.seconds+1
