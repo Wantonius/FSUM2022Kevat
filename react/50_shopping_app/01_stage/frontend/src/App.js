@@ -2,7 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 import {useState,useEffect} from 'react';
 import ShoppingForm from './components/ShoppingForm';
+import ShoppingList from './components/ShoppingList';
 import Navbar from './components/Navbar';
+import {Routes,Route} from 'react-router-dom';
 
 function App() {
 	
@@ -85,7 +87,10 @@ function App() {
 		<div className="App">
 			<Navbar/>
 			<hr/>
-			<ShoppingForm addShoppingItem={addShoppingItem}/>
+			<Routes>
+				<Route exact path="/" element={<ShoppingList list={state.list}/>}/>
+				<Route path="/form" element={<ShoppingForm addShoppingItem={addShoppingItem}/>}/>
+			</Routes>
 		</div>
 	);
 }
