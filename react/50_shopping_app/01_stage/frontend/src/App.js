@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import {useState,useEffect} from 'react';
 import ShoppingForm from './components/ShoppingForm';
+import Navbar from './components/Navbar';
 
 function App() {
 	
@@ -82,6 +83,8 @@ function App() {
 	
 	return (
 		<div className="App">
+			<Navbar/>
+			<hr/>
 			<ShoppingForm addShoppingItem={addShoppingItem}/>
 		</div>
 	);

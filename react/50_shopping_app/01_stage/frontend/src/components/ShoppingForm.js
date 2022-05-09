@@ -31,6 +31,7 @@ const ShoppingForm = (props) => {
 	}
 	
 	return(
+	<div style={{width:500,backgroundColor:"lightgreen",margin:"auto"}}>
 		<form onSubmit={onSubmit} className="mb-3">
 			<label htmlFor="type" className="form-label">Type</label>
 			<input type="text"
@@ -56,6 +57,7 @@ const ShoppingForm = (props) => {
 					value={state.price}/>
 			<input type="submit" className="btn btn-primary" value="Add"/>
 		</form>
+	</div>
 	)
 }
 
