@@ -37,6 +37,9 @@ router.delete("/shopping/:id",function(req,res) {
 	let tempId = parseInt(req.params.id,10);
 	for(let i = 0;i<database.length;i++) {
 		if(tempId === database[i].id) {
+			if(req.session.user !== database[i].user) {
+				return res.status(409).json({message:"You are not authorized to remove this item"});
+			}
 			database.splice(i,1);
 			return res.status(200).json({message:"Success!"})
 		}
@@ -56,10 +59,14 @@ router.put("/shopping/:id",function(req,res) {
 		type:req.body.type,
 		count:req.body.count,
 		price:req.body.price,
-		id:tempId
+		id:tempId,
+		user:req.session.user
 	}
 	for(let i = 0;i<database.length;i++) {
 		if(tempId === database[i].id) {
+			if(req.session.user !== database[i].user) {
+				return res.status(409).json({message:"You are not authorized to edit this item"});
+			}			
 			database.splice(i,1,item);
 			return res.status(200).json({message:"Success!"})
 		}
