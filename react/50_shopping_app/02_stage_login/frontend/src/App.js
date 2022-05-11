@@ -4,7 +4,7 @@ import ShoppingForm from './components/ShoppingForm';
 import ShoppingList from './components/ShoppingList';
 import Navbar from './components/Navbar';
 import LoginPage from './components/LoginPage';
-import {Routes,Route} from 'react-router-dom';
+import {Routes,Route,Navigate} from 'react-router-dom';
 
 function App() {
 	
@@ -121,6 +121,9 @@ function App() {
 						})
 						getShoppingList(token.token);
 						return;
+					case "logout":
+						clearState();
+						return;
 					default:
 						return;
 				}
@@ -128,6 +131,7 @@ function App() {
 				if(response.status === 403) {
 					clearState();
 					setError("Your session has expired. Logging you out!");
+					return;
 				}
 				//TODO: handle all different failed requests for the backend
 				switch(urlRequest.action) {
@@ -152,6 +156,9 @@ function App() {
 						return;
 					case "login":
 						setError("Failed to login user. Server responded with a status:"+response.status);
+						return;
+					case "logout":
+						clearState();
 						return;
 					default:
 						return;
@@ -187,6 +194,19 @@ function App() {
 				body:JSON.stringify(user)
 			},
 			action:"login"
+		})
+	}
+	
+	const logout = () => {
+		setUrlRequest({
+			url:"/logout",
+			request:{
+				method:"POST",
+				mode:"cors",
+				headers:{"Content-type":"application/json",
+						"token":state.token}
+			},
+			action:"logout"
 		})
 	}
 	
@@ -259,19 +279,21 @@ function App() {
 		messageArea =<h4>{state.error}</h4>
 	}
 	let tempRender = <Routes>
-		<Route exact path="/" element={
+			<Route exact path="/" element={
 			<LoginPage setError={setError} register={register} login={login}/>
 			}/>
+			<Route path="*" element={<Navigate to="/"/>}/>
 		</Routes>
 	if(state.isLogged) {
 		tempRender = <Routes>
 				<Route exact path="/" element={<ShoppingList list={state.list} removeFromList={removeFromList} editItem={editItem}/>}/>
 				<Route path="/form" element={<ShoppingForm addShoppingItem={addShoppingItem}/>}/>
+				<Route path="*" element={<Navigate to="/"/>}/>
 			</Routes>
 	}
 	return (
 		<div className="App">
-			<Navbar isLogged={state.isLogged}/>
+			<Navbar isLogged={state.isLogged} logout={logout}/>
 			{messageArea}
 			<hr/>
 			{tempRender}
