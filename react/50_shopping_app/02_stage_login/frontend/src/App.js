@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import {useState,useEffect} from 'react';
 import ShoppingForm from './components/ShoppingForm';
@@ -23,6 +22,22 @@ function App() {
 		action:""
 	})
 	
+	//STORAGE FUNCTIONS
+	
+	useEffect(() => {		
+			if(sessionStorage.getItem("state")) {
+				let state = JSON.parse(sessionStorage.getItem("state"));
+				setState(state);
+				if(state.isLogged) {
+					getShoppingList(state.token);
+				}
+			}
+		},[]);
+		
+	const saveToStorage = (state) => {
+		sessionStorage.setItem("state",JSON.stringify(state));
+	}
+	
 	//APP STATE FUNCTIONS
 	
 	const setLoading = (loading) => {
@@ -37,21 +52,25 @@ function App() {
 	
 	const setError = (error) => {
 		setState((state) => {
-			return {
+			let tempState = {
 				...state,
 				error:error
 			}
+			saveToStorage(tempState);
+			return tempState;
 		})
 	}
 	
 	const clearState = () => {
-		setState({
+		let state = {
 			list:[],
 			isLogged:false,
 			token:"",
 			loading:false,
 			error:""
-		})
+		}
+		saveToStorage(state);
+		setState(state);
 	}
 	
 	useEffect(() => {
@@ -69,10 +88,12 @@ function App() {
 					case "getlist":
 						let data = await response.json();
 						setState((state) => {
-							return {
+							let tempState = {
 								...state,
 								list:data
-							}							
+							}
+							saveToStorage(tempState);
+							return tempState;							
 						})
 						return;
 					case "additem":
@@ -90,11 +111,13 @@ function App() {
 					case "login":
 						let token = await response.json();
 						setState((state) => {
-							return {
+							let tempState = {
 								...state,
 								isLogged:true,
 								token:token.token
 							}
+							saveToStorage(tempState);
+							return tempState;
 						})
 						getShoppingList(token.token);
 						return;
@@ -137,7 +160,7 @@ function App() {
 		}
 		
 		fetchData();
-	},[urlRequest.url,urlRequest.request]);
+	},[urlRequest]);
 	
 	//LOGIN API
 	
@@ -228,7 +251,7 @@ function App() {
 	
 	//CONDITIONAL RENDERING
 	
-	let messageArea = <h4></h4>
+	let messageArea = <h4> </h4>
 	if(state.loading) {
 		messageArea = <h4>Loading...</h4>
 	}
@@ -248,7 +271,7 @@ function App() {
 	}
 	return (
 		<div className="App">
-			<Navbar/>
+			<Navbar isLogged={state.isLogged}/>
 			{messageArea}
 			<hr/>
 			{tempRender}
