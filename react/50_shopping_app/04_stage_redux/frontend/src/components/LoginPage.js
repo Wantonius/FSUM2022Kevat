@@ -1,4 +1,6 @@
 import {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {register} from '../actions/loginActions';
 
 const LoginPage = (props) => {
 	
@@ -6,6 +8,8 @@ const LoginPage = (props) => {
 		username:"",
 		password:""
 	})
+	
+	const dispatch = useDispatch();
 	
 	const onChange = (event) => {
 		setState((state) => {
@@ -27,7 +31,7 @@ const LoginPage = (props) => {
 			password:state.password
 		}
 		if(event.target.name === "register") {
-			props.register(user);
+			dispatch(register(user));
 		} else {
 			props.login(user);
 		}
