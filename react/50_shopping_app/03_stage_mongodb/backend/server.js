@@ -22,10 +22,8 @@ mongoose.connect(connection_url).then(
 	(error) => console.log("Failed to connect to Mongodb. Reason",error)
 )
 
-//LOGIN DATABASES
+mongoose.set("toJSON",{virtuals:true});
 
-let registeredUsers = [];
-let loggedSessions = [];
 let time_to_life_diff = 3600000;
 
 
