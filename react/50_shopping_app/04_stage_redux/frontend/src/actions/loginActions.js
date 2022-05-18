@@ -38,6 +38,31 @@ export const register = (user) => {
 	}
 }
 
+export const login = (user) => {
+	return async (dispatch) => {
+		let request = {
+			method:"POST",
+			mode:"cors",
+			headers:{"Content-type":"application/json"},
+			body:JSON.stringify(user)
+		}
+		dispatch(loading());
+		let response = await fetch("/login",request);
+		if(!response) {
+			dispatch(loginFailed("There was an error the connection. Login failed!"));
+		}
+		if(response.ok) {
+			let data = await response.json();
+			if(!data) {
+				dispatch(loginFailed("Error parsing login information. Login failed!"))
+			}
+			dispatch(loginSuccess(data.token));
+		} else {
+			dispatch(loginFailed("Login failed. Server responded with a status:"+response.status))
+		}
+	}
+}
+
 //Action creators
 
 export const loading = () => {
@@ -58,9 +83,23 @@ const registerSuccess = () => {
 	}
 }
 
-const registerFailed = (error) => {
+export const registerFailed = (error) => {
 	return {
 		type:REGISTER_FAILED,
 		error:error
 	}
 } 
+
+const loginSuccess = (token) => {
+	return {
+		type:LOGIN_SUCCESS,
+		token:token
+	}
+}
+
+const loginFailed = (error) => {
+	return {
+		type:LOGIN_FAILED,
+		error:error
+	}
+}

@@ -1,9 +1,14 @@
 import {Link} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 const Navbar = (props) => {
 	
+	const state = useSelector(state => {
+		return state;
+	})
+	
 	let links = <ul className="navbar-nav"></ul>
-	if(props.isLogged) {
+	if(state.isLogged) {
 		links =	<ul className="navbar-nav">
 				<li className="nav-item">
 					<Link to="/">Shopping List</Link>
