@@ -59,7 +59,7 @@ const loginReducer = (state = initialState,action) => {
 				error:"Register success!"
 			}
 			saveToStorage(tempState);
-			return;
+			return tempState;
 		case REGISTER_FAILED:
 			tempState = {
 				...state,
@@ -67,7 +67,7 @@ const loginReducer = (state = initialState,action) => {
 				error:action.error
 			}
 			saveToStorage(tempState);
-			return;
+			return tempState;
 		case LOGIN_SUCCESS:
 			tempState = {
 				isLogged:true,
@@ -76,7 +76,7 @@ const loginReducer = (state = initialState,action) => {
 				error:""
 			}
 			saveToStorage(tempState);
-			return;
+			return tempState;
 		case LOGIN_FAILED:
 			tempState = {
 				...state,
@@ -84,7 +84,7 @@ const loginReducer = (state = initialState,action) => {
 				error:action.error
 			}
 			saveToStorage(tempState);
-			return;
+			return tempState;
 		case LOGOUT_SUCCESS:
 			tempState = {
 				isLogged:false,
@@ -93,7 +93,7 @@ const loginReducer = (state = initialState,action) => {
 				error:""
 			}
 			saveToStorage(tempState);
-			return;
+			return tempState;
 		case LOGOUT_FAILED:
 			tempState = {
 				isLogged:false,
@@ -102,7 +102,7 @@ const loginReducer = (state = initialState,action) => {
 				error:action.error
 			}
 			saveToStorage(tempState);
-			return;
+			return tempState;
 		case CLEAR_LOGIN_STATE:
 			tempState = {
 				isLogged:false,
@@ -111,7 +111,7 @@ const loginReducer = (state = initialState,action) => {
 				error:""
 			}
 			saveToStorage(tempState);
-			return;
+			return tempState;
 		default:
 			return state;
 	}
