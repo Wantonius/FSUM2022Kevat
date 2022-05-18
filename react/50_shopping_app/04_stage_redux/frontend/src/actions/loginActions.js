@@ -1,3 +1,4 @@
+import {getList,clearShoppingState} from './shoppingActions';
 //Action types as constants
 
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -57,6 +58,7 @@ export const login = (user) => {
 				dispatch(loginFailed("Error parsing login information. Login failed!"))
 			}
 			dispatch(loginSuccess(data.token));
+			dispatch(getList(data.token));
 		} else {
 			dispatch(loginFailed("Login failed. Server responded with a status:"+response.status))
 		}
@@ -75,12 +77,15 @@ export const logout = (token) => {
 		let response = await fetch("/logout",request);
 		if(!response) {
 			dispatch(logoutFailed("There was an error with the connection. Logging you out!"))
+			dispatch(clearShoppingState());
 			return;
 		}
 		if(response.ok) {
 			dispatch(logoutSuccess());
+			dispatch(clearShoppingState());
 		} else {
 			dispatch(logoutFailed("Server responded with a status "+response.status+". Logging you out!"))
+			dispatch(clearShoppingState());
 		}
 	}
 }
