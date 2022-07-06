@@ -3,7 +3,7 @@ import useAction from '../hooks/useAction';
 
 const LoginPage = (props) => {
 	
-	const {register} = useAction();
+	const {register,login} = useAction();
 	
 	const [state,setState] = useState({
 		username:"",
@@ -32,7 +32,7 @@ const LoginPage = (props) => {
 		if(event.target.name === "register") {
 			register(user);
 		} else {
-			props.login(user);
+			login(user);
 		}
 	}
 	
