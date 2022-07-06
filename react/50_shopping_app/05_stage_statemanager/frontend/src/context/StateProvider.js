@@ -25,7 +25,127 @@ const saveToStorage = (state) => {
 }
 
 const listReducer = (state,action) => {
-	//TODO: fill the reducer
+	let tempState = {};
+	switch(action.type) {
+		case ActionConstants.LOADING:
+			return {
+				...state,
+				loading:true,
+				error:""
+			}
+		case ActionConstants.STOP_LOADING:
+			return {
+				...state,
+				loading:false
+			}
+		case ActionConstants.REGISTER_SUCCESS:
+			tempState = {
+				...state,
+				error:"Register success!"
+			}
+			saveToStorage(tempState);
+			return tempState;
+		case ActionConstants.REGISTER_FAILED:
+			tempState = {
+				...state,
+				error:action.error
+			}
+			saveToStorage(tempState);
+			return tempState;
+		case ActionConstants.LOGIN_SUCCESS:
+			tempState = {
+				...state,
+				token:action.token,
+				isLogged:true
+			}
+			saveToStorage(tempState);
+			return tempState;
+		case ActionConstants.LOGIN_FAILED:
+			tempState = {
+				...state,
+				error:action.error
+			}
+			saveToStorage(tempState);
+			return tempState;
+		case ActionConstants.LOGOUT_SUCCESS:
+			tempState = {
+				list:[],
+				token:"",
+				isLogged:false,
+				loading:false,
+				error:""
+			}
+			saveToStorage(tempState);
+			return tempState;
+		case ActionConstants.LOGOUT_FAILED:
+			tempState = {
+				list:[],
+				token:"",
+				isLogged:false,
+				loading:false,
+				error:action.error
+			}
+			saveToStorage(tempState);
+			return tempState;			
+		case ActionConstants.FETCH_LIST_SUCCESS:
+			tempState = {
+				...state,
+				list:action.list
+			}
+			saveToStorage(tempState);
+			return tempState;
+		case ActionConstants.FETCH_LIST_FAILED:
+			tempState = {
+				...state,
+				error:action.error
+			}
+			saveToStorage(tempState);
+			return tempState;
+		case ActionConstants.ADD_ITEM_SUCCESS:
+			tempState = {
+				...state,
+				error:""
+			}
+			saveToStorage(tempState);
+			return tempState;
+		case ActionConstants.ADD_ITEM_FAILED:
+			tempState = {
+				...state,
+				error:action.error
+			}
+			saveToStorage(tempState);
+			return tempState;
+		case ActionConstants.REMOVE_ITEM_SUCCESS:
+			tempState = {
+				...state,
+				error:""
+			}
+			saveToStorage(tempState);
+			return tempState;
+		case ActionConstants.REMOVE_ITEM_FAILED:
+			tempState = {
+				...state,
+				error:action.error
+			}
+			saveToStorage(tempState);
+			return tempState;			
+		case ActionConstants.EDIT_ITEM_SUCCESS:
+			tempState = {
+				...state,
+				error:""
+			}
+			saveToStorage(tempState);
+			return tempState;
+		case ActionConstants.EDIT_ITEM_FAILED:
+			tempState = {
+				...state,
+				error:action.error
+			}
+			saveToStorage(tempState);
+			return tempState;	
+		default:
+			return state;
+	}
 }
 
 const StateProvider = (props) => {
