@@ -96,8 +96,7 @@ const useAction = () => {
 						default:
 							return;
 						}
-					}
-				} else {
+					} else {
 					switch(state.action) {
 						case "register":
 							if(response.status === 409) {
@@ -293,7 +292,7 @@ const useAction = () => {
 		})
 	}
 	
-	return {register,login,logout,getlist,add,remove,edit};
+	return {register,login,logout,getList,add,remove,edit};
 }
 
 export default useAction;
