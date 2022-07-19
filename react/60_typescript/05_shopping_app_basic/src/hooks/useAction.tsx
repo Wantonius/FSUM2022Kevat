@@ -51,7 +51,7 @@ export const useAction = ():[ShoppingItem[],boolean,() => void, (item:ShoppingIt
 	const [state,dispatch] = useReducer(listReducer,initialState);
 	
 	useEffect(() => {
-		if(!urlRequest.request) {
+		if(!urlRequest.request.url) {
 			return;
 		}
 		
@@ -72,9 +72,9 @@ export const useAction = ():[ShoppingItem[],boolean,() => void, (item:ShoppingIt
 			} else {
 				console.log("Server responded with a status:"+response.status);
 			}
-			
-		fetchData();	
+				
 		}
+		fetchData();	
 	},[urlRequest.request])
 	
 	const getList = () => {
