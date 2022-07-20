@@ -1,5 +1,9 @@
 import React,{useState} from 'react';
 import User from '../models/User';
+import {register,login} from '../actions/loginActions';
+import {useDispatch} from 'react-redux';
+import {ThunkDispatch} from 'redux-thunk';
+import {AnyAction} from 'redux';
 
 
 interface State {
@@ -14,6 +18,8 @@ const LoginPage:React.FC<{}> = (props) => {
 		password:""
 	})
 	
+	const dispatch:ThunkDispatch<any,any,AnyAction> = useDispatch();
+	
 	const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
 		setState((state) => {
 			return {
@@ -26,13 +32,13 @@ const LoginPage:React.FC<{}> = (props) => {
 	const onRegister = (e:React.SyntheticEvent) => {
 		e.preventDefault();
 		let user = new User(state.username,state.password);
-		//TODO: useDispatch to register user
+		dispatch(register(user));
 	}
 	
 	const onLogin = (e:React.SyntheticEvent) => {
 		e.preventDefault();
 		let user = new User(state.username,state.password);
-		//TODO: useDispatch to login user
+		dispatch(login(user));
 	}
 	
 	return(
