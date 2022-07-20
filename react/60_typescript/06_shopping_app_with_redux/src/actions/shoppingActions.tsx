@@ -3,7 +3,7 @@ import {ThunkDispatch} from 'redux-thunk';
 import {AnyAction} from 'redux';
 import * as ActionConstants from '../types/actionConstants';
 
-export const getList = (token:string):void => {
+export const getList = (token:string) => {
 	return (dispatch:ThunkDispatch<any,any,AnyAction>) => {
 		const request:Request = new Request("/api/shopping",{
 			method:"GET",
@@ -15,7 +15,7 @@ export const getList = (token:string):void => {
 	}
 }
 
-export const add = (token:string,item:ShoppingItem):void => {
+export const add = (token:string,item:ShoppingItem) => {
 	return (dispatch:ThunkDispatch<any,any,AnyAction>) => {
 		const request:Request = new Request("/api/shopping",{
 			method:"POST",
@@ -28,7 +28,7 @@ export const add = (token:string,item:ShoppingItem):void => {
 	}	
 }
 
-export const remove = (token:string,id:number | string):void => {
+export const remove = (token:string,id:number | string) => {
 	return (dispatch:ThunkDispatch<any,any,AnyAction>) => {
 		const request:Request = new Request("/api/shopping/"+id,{
 			method:"DELETE",
@@ -40,7 +40,7 @@ export const remove = (token:string,id:number | string):void => {
 	}	
 }
 
-export const edit = (token:string,item:ShoppingItem):void => {
+export const edit = (token:string,item:ShoppingItem) => {
 	return (dispatch:ThunkDispatch<any,any,AnyAction>) => {
 		const request:Request = new Request("/api/shopping/"+item.id,{
 			method:"PUT",
@@ -53,7 +53,7 @@ export const edit = (token:string,item:ShoppingItem):void => {
 	}	
 }
 
-const handleFetch = async (request:Request,act:string,dispatch:ThunkDispatch<any,any,AnyAction>,token:string):void => {
+const handleFetch = async (request:Request,act:string,dispatch:ThunkDispatch<any,any,AnyAction>,token:string) => {
 	dispatch({
 		type:ActionConstants.LOADING
 	})

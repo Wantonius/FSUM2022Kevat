@@ -7,31 +7,31 @@ interface Token {
 	token:string
 }
 
-export const register = (user:User):void => {
+export const register = (user:User) => {
 	return (dispatch:ThunkDispatch<any,any,AnyAction>) => {
 		const request:Request = new Request("/register",{
 			method:"POST",
 			mode:"cors",
 			headers:{"Content-type":"application/json"},
-			body:JSON.stringify(user);
+			body:JSON.stringify(user)
 		})
 		handleLogin(request,"register",dispatch);
 	}
 }
 
-export const login = (user:User):void => {
+export const login = (user:User)=> {
 	return (dispatch:ThunkDispatch<any,any,AnyAction>) => {
 		const request:Request = new Request("/login",{
 			method:"POST",
 			mode:"cors",
 			headers:{"Content-type":"application/json"},
-			body:JSON.stringify(user);
+			body:JSON.stringify(user)
 		})
 		handleLogin(request,"login",dispatch);
 	}	
 }
 
-export const logout = (token:string):void => {
+export const logout = (token:string) => {
 	return (dispatch:ThunkDispatch<any,any,AnyAction>) => {
 		const request:Request = new Request("/logout",{
 			method:"POST",
@@ -65,7 +65,7 @@ const handleLogin = async (request:Request,act:string,dispatch:ThunkDispatch<any
 			const temp = await response.json();
 			if(!temp) {
 				dispatch({
-					type:ActionConstants.LOGIN_FAILED:
+					type:ActionConstants.LOGIN_FAILED,
 					error:"Failed to parse login information"
 				})
 				return;

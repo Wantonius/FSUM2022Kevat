@@ -32,6 +32,7 @@ function App() {
 			</div>
 		);
 	} else {
+		return(
 			<div className="App">
 				<Navbar/>
 				<hr/>
@@ -40,6 +41,7 @@ function App() {
 					<Route path="*" element={<Navigate to="/"/>}/>
 				</Routes>
 			</div>		
+		);
 	}
 }
 
